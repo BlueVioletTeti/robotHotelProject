@@ -6,8 +6,11 @@ import com.ua.robot.repository.RoomRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -15,31 +18,48 @@ public class RoomService {
 
     private final RoomRepository roomRepository;
 
+   private static RoomDto buildRoomDto(Room room) {
+        return RoomDto.builder()
+                .id(room.getRoomId())
+                .type(room.getType())
+                .capacity(room.getCapacity())
+                .roomPrice(room.getRoomPrice())
+                .description(room.getDescription())
+                .build();
+    }
+
     public List<RoomDto> findAll() {
-//        return roomRepository.findAll()
-//                .stream()
-//                .map(GuestService::buildRoomDto)
-//                .collect(Collectors.toList());
-        return null;
+        return roomRepository.findAll()
+                .stream()
+                .map(RoomService::buildRoomDto)
+                .collect(Collectors.toList());
     }
-
-    private static RoomDto buildRoomDto(Room room) {
-//        return GuestDto.builder()
-//                .id(room.getId())
-//                .name(room.getGuestName())
-//                .reservationsId(room.getReservations().stream()
-//                        .map(Room::getRoomType)
-//                        .collect(Collectors.toList()))
-//                .build();
-        return null;
+    public List<RoomDto> findRoomsNotReservationListInRange(LocalDate arrivalDate, LocalDate departureDate) {
+        List<Room> rooms = roomRepository.findRoomsNotReservationListInRange(arrivalDate, departureDate);
+        List<RoomDto> availableRooms = new ArrayList<>();
+        for (Room room : rooms) {
+            RoomDto roomDto = RoomDto.builder()
+                    .id(room.getRoomId())
+                    .type(room.getType())
+                    .capacity(room.getCapacity())
+                    .roomPrice(room.getRoomPrice())
+                    .description(room.getDescription())
+                    .build();
+            availableRooms.add(roomDto);
+        }
+        return availableRooms;
     }
-
-    public Optional<Room> findById(Long id) {
-//        return roomRepository.findById(id);
-        return null;
+    public Optional<RoomDto> findById(Long id) {
+        return roomRepository.findById(id).map(RoomService::buildRoomDto);
     }
-
+    public Optional<Room> findByIdUpdate(Long id) {
+        return roomRepository.findById(id);
+    }
     public void save(Room room) {
-//        roomRepository.save(room);
+        roomRepository.save(room);
     }
+    public void deleteById(Long id) {
+        roomRepository.deleteById(id);
+    }
+
 }

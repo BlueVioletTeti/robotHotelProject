@@ -2,6 +2,8 @@ package com.ua.robot.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -11,21 +13,26 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @Entity
-@Table
+@Table (name = "reservations")
+@EnableScheduling
+@EnableTransactionManagement
+
 public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column
+    @Temporal(TemporalType.DATE)
     private LocalDate arrivalDate;
     @Column
+    @Temporal(TemporalType.DATE)
     private LocalDate departureDate;
 
-    @Column
-    private int calculateLengthOfStay(LocalDate arrivalDate, LocalDate departureDate) {
-        Period period = Period.between(arrivalDate, departureDate);
-        return Math.abs(period.getDays());
-    }
+//    @Column
+//    private int calculateLengthOfStay(LocalDate arrivalDate, LocalDate departureDate) {
+//        Period period = Period.between(arrivalDate, departureDate);
+//        return Math.abs(period.getDays());
+//    }
 
     @ManyToMany
     @JoinColumn(name = "guest_id")

@@ -15,7 +15,6 @@ public class ReservationDto {
     private LocalDate arrivalDate;
     private LocalDate departureDate;
     private Guest guest;
-    private int area;
     private Room room;
     private Receptionist receptionist;
 }

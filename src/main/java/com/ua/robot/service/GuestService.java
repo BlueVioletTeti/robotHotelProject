@@ -24,22 +24,33 @@ public class GuestService {
     }
 
     private static GuestDto buildGuestDto(Guest guest) {
-//        return GuestDto.builder()
-//                .id(guest.getId())
-//                .name(guest.getGuestName())
-//                .surname(guest.getGuestSurname())
-//                .reservationsId(guest.getReservations().stream()
-//                        .map(Reservation::getGuestSurname)
-//                        .collect(Collectors.toList()))
-//                .build();
-        return null;
+        return GuestDto.builder()
+                .id(guest.getId())
+                .guestName(guest.getGuestName())
+                .guestSurname(guest.getGuestSurname())
+                .passportId(guest.getPassportId())
+                .phoneNumber(guest.getPhoneNumber())
+                .address(guest.getAddress())
+                .reservations(guest.getReservations()
+                        .stream()
+                        .map(reservation ->reservation.getId())
+                        .collect(Collectors.toList()))
+                .build();
     }
 
-    public Optional<Guest> findById(Long id) {
-        return guestRepository.findById(id);
+    public Guest findById(Long id) {
+        return guestRepository.findById(id).get();
     }
 
     public void save(Guest guest) {
         guestRepository.save(guest);
+    }
+
+    public GuestDto findByPassportId(int passportId) {
+        return buildGuestDto(guestRepository.findByPassportId(passportId));
+    }
+
+    public GuestDto findBySurname(String guestSurname) {
+        return buildGuestDto(guestRepository.findBySurname(guestSurname));
     }
 }

@@ -10,7 +10,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @Entity
-@Table
+@Table (name = "admins")
 public class Receptionist {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,18 +29,5 @@ public class Receptionist {
     @OneToMany(mappedBy = "receptionist")
     private List<Guest> guests;
 
-    private List<Room> checkRoomAvailability(List<Room> rooms, LocalDate getArrivalDate, LocalDate getDepartureDate) {
-//        for(int i=0; i<rooms.size(); i++){
-//            rooms[i]
-//        }
-        return null;
-    }
 
-    private void bookRoom() {
-//        if(room is available){
-//           Reservation reservation = new Reservation();
-//        }else{
-//            throw exception?
-//        }
-    }
 }

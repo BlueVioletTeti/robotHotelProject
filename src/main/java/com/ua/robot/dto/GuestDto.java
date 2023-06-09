@@ -16,5 +16,5 @@ public class GuestDto {
     private int passportId;
     private int phoneNumber;
     private String address;
-//    private List<Reservation> reservations;
+    private List<Reservation> reservations;
 }
