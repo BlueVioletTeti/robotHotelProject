@@ -28,17 +28,13 @@ public class ReservationService {
 
     }
 
-//    public Optional<Reservation> findById(Long id) {
-//        return reservationRepository.findById(id);
-//    }
-
     private static ReservationDto buildReservationDto(Reservation reservation) {
         return ReservationDto.builder()
                 .id(reservation.getId())
                 .arrivalDate(reservation.getArrivalDate())
                 .departureDate(reservation.getDepartureDate())
-                .room(reservation.getRoom())
-                .guest((Guest) reservation.getGuests())
+                .room(reservation.getRoom().getType())
+                .guest(reservation.getGuest().getGuestSurname())
                 .build();
     }
 
@@ -54,17 +50,6 @@ public class ReservationService {
             reservationRepository.save(reservation);
         }
     }
-
-//    public void addGuest(Long reservationId, Long guestId) {
-//        var guest = guestRepository.findById(guestId).get();
-//        var reservation = reservationRepository.findById(reservationId).get();
-//        reservation.setGuests(guest.setGuestName());
-//
-//        reservationRepository.save(reservation);
-//    }
-
-
-
     public void changeRoom(Long roomId, Long reservationId) {
         var reservation = reservationRepository.findById(reservationId).get();
         var room = roomRepository.findById(roomId).get();

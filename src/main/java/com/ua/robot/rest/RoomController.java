@@ -45,7 +45,7 @@ public class RoomController {
              LocalDate departureDate) {
         return roomService.findRoomsNotReservationListInRange(arrivalDate, departureDate);
     }
-    @PutMapping("/room/{id}")
+    @PutMapping("/rooms/{id}")
     public ResponseEntity<Void> updateRoom(@PathVariable("id") Long id, @RequestBody RoomDto roomDto) {
         Optional<Room> optionalRoom = roomService.findByIdUpdate(id);
         if (optionalRoom.isEmpty()) {
@@ -56,7 +56,6 @@ public class RoomController {
         room.setCapacity(roomDto.getCapacity());
         room.setRoomPrice(roomDto.getRoomPrice());
         room.setDescription(roomDto.getDescription());
-
         roomService.save(room);
         return ResponseEntity.ok().build();
     }

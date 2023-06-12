@@ -29,14 +29,6 @@ public class ReservationController {
         return ResponseEntity.ok(reservationService.findAll());
     }
 
-//    @PostMapping("/reservations/{id}/guests/{guestId}")
-//    public ResponseEntity<Void> updateGuestList(@PathVariable Long id, @PathVariable Long guestId) {
-//        reservationService.addGuest(id, guestId);
-//
-//        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
-//    }
-
-
     @PostMapping("/reservations/{id}/rooms/{roomId}")
     public ResponseEntity<Void> changeRoom(@PathVariable Long roomId, @PathVariable Long reservationId) {
         reservationService.changeRoom(roomId, reservationId);

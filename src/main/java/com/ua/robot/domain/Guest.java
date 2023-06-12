@@ -25,10 +25,6 @@ public class Guest {
     @Column
     private String address;
 
-    @ManyToMany
-    @JoinColumn(name = "reservation_id")
+    @OneToMany(mappedBy = "client_id")
     private List<Reservation> reservations;
-    @ManyToOne
-    @JoinColumn(name = "receptionist_id")
-    private Receptionist receptionist;
 }

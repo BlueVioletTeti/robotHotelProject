@@ -6,8 +6,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.time.LocalDate;
-import java.time.Period;
-import java.util.List;
 
 @Data
 @Builder
@@ -21,27 +19,19 @@ public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column
+    @Column(name = "arrival_date")
     @Temporal(TemporalType.DATE)
     private LocalDate arrivalDate;
-    @Column
+    @Column(name = "departure_date")
     @Temporal(TemporalType.DATE)
     private LocalDate departureDate;
 
-//    @Column
-//    private int calculateLengthOfStay(LocalDate arrivalDate, LocalDate departureDate) {
-//        Period period = Period.between(arrivalDate, departureDate);
-//        return Math.abs(period.getDays());
-//    }
-
-    @ManyToMany
+    @ManyToOne
     @JoinColumn(name = "guest_id")
-    private List<Guest> guests;
+    private Guest guest;
 
-    @ManyToMany
+    @ManyToOne
     @JoinColumn(name = "room_id")
     private Room room;
-    @ManyToOne
-    @JoinColumn(name = "receptionist_id")
-    private Receptionist receptionist;
+
 }

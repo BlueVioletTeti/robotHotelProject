@@ -12,24 +12,12 @@ import java.util.Optional;
 
 @Repository
 public interface RoomRepository extends JpaRepository<Room, Long> {
-//    @Query("SELECT * FROM rooms\n" +
-//            "WHERE rooms.id NOT IN\n" +
-//            "(SELECT * FROM rooms\n" +
-//            "       LEFT JOIN reservations ON rooms.id = reservations.room_id\n" +
-//            "       UNION\n" +
-//            "       SELECT * FROM rooms\n" +
-//            "       RIGHT JOIN reservations ON rooms.id = reservations.room_id" +
-//            "       WHERE reservations.arrivalDate >= ?(arrivalDate) AND " +
-//            "reservations.departureDate <=? (departureDate)\n" +
-//            ";")
-//    List<Room> findAllAvailableReservations(LocalDate arrivalDate, LocalDate departureDate);
-
     @Query("SELECT *  FROM rooms WHERE rooms.id NOT IN (SELECT reservations.room_id FROM " +
-            "reservations WHERE reservations.arrivalDate <= :departureDate AND " +
-            "reservations.departureDate >= :arrivalDate)")
+            "reservations WHERE reservations.arrival_date <= :departure_date AND " +
+            "reservations.departure_date >= :arrival_date)")
     List<Room> findRoomsNotReservationListInRange(
-            @Param("arrivalDate") LocalDate arrivalDate,
-            @Param("checkOut") LocalDate departureDate);
+            @Param("arrival_date") LocalDate arrivalDate,
+            @Param("departure_date") LocalDate departureDate);
 
 
     Optional<Room> findById(Long id);

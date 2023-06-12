@@ -8,10 +8,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @SpringBootApplication
 @EnableScheduling
 @EnableTransactionManagement
-public class RobotSpringDemoApplication {
+public class RobotSpringHotelApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(RobotSpringDemoApplication.class, args);
+        SpringApplication.run(RobotSpringHotelApplication.class, args);
     }
 
 }

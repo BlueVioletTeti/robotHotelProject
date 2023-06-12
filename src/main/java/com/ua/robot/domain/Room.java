@@ -26,11 +26,7 @@ public class Room {
     @Column
     private String description;
 
-    @ManyToMany
-    @JoinColumn(name = "reservation_id")
+    @OneToMany(mappedBy = "room_id")
     private List<Reservation> reservations;
-    @ManyToOne
-    @JoinColumn(name = "receptionist_id")
-    private Receptionist receptionist;
 
 }

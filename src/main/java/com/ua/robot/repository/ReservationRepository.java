@@ -11,13 +11,13 @@ import java.time.LocalDate;
 
 @Repository
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
-    @Query("select case when count (c) > 0 from reservation where room_id = : room.id and " +
-            "(start_date < :start_date and end_date > :start_date) or " +
-            "(start_date < :end_date and end_date > :end_date) " +
-            "or (:start_date between start_date and end_date) or " +
-            "(:end_date between start_date and end_date)")
+    @Query("SELECT case when COUNT (c) > 0 FROM reservation WHERE room_id = : room.id AND " +
+            "(arrival_date < :arrival_date AND departure_date > :arrival_date) OR " +
+            "(arrival_date < :departure_date AND departure_date > :departure_date) " +
+            "OR (:arrival_date BETWEEN arrival_date and departure_date) OR " +
+            "(:departure_date BETWEEN arrival_date AND departure_date)")
     boolean existsByRoomAndArrivalDateAndDepartureDate(
             @Param("room") Room room,
-            @Param("start_date") LocalDate start,
-            @Param("end_date") LocalDate end);
+            @Param("arrival_date") LocalDate start,
+            @Param("departure_date") LocalDate end);
 }
